@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Stars Shopping Website</title>
+	<link rel="stylesheet" type="text/css" href="node_modules/angular-material/angular-material.css">
+  <link rel="stylesheet" type="text/css" href="node_modules/mdi/css/materialdesignicons.min.css">
+</head>
+
+<body ng-app="myStars" ng-controller="starsCtrl">
+	
+    <md-toolbar>
+    <div class="md-toolbar-tools">
+      <p><strong>My Stars Shopping Website</strong></p>
+    
+        <md-button ng-click="openSidebar()">
+        <md-icon class="mdi mdi-shopping" ></md-icon>
+        You Total Cost is {{ total() | currency}}
+        </md-button>
+      </div>
+    </md-toolbar>
+
+
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2"
+    md-component-id="left">
+    <md-toolbar>
+      <h1 class="md-toolbar-tools">Shopping Cart</h1>
+    </md-toolbar>
+
+    <md-content layout-padding>
+      <form>
+      <md-container>
+        <h2 for="title">Title</h2>
+        <div id="title" ng-model="star.title">{{ addTitle() }}</div>
+      </md-container>
+      <md-container>
+        <h2 for="price">Price</h2>
+        <div id="price" ng-model="star.price">{{ total() |currency}}</div>
+      </md-container>
+
+      </form>
+        <md-button>Check Out</md-button>
+        
+
+        <md-button ng-click="closeSidebar()">Cancel</md-button>
+    
+    </md-content>
+
+  </md-sidenav>
+
+
+      <md-content class="md-padding" layout="row" layout-wrap>
+    	<md-card ng-repeat="star in stars | orderBy:'-views'" flex="40">
+      	<img ng-src="{{ star.image }}"/>
+      <md-card-content>
+          <div class="star-info" ng-show="!showContact">
+          <h2 class="md-title">{{ star.title }}</h2>
+          <h2>{{ star.posted | date}}</h2>
+          <h3>{{ star.price | currency }}</h3>
+          <p>{{ star.description}}</p>
+          </div>
+
+          <div class="star-contact" ng-show="showContact">
+          <p>{{ star.contact.name}}</p>
+          <p>{{ star.contact.phone}}</p>
+          <p>{{ star.contact.email}}</p>
+          </div>
+
+
+        <div layout="row">
+          <md-button ng-click="showContact = true" ng-show="!showContact">Contact</md-button>
+          <md-button ng-click="showContact = false" ng-show="showContact">Details</md-button>
+          <md-button ng-click="addCartItem(star)">Add</md-button>
+          <md-button ng-click="deleteCartItem()">Delete</md-button>
+		    </div>
+
+      </md-card-content>
+      </md-card>
+      </md-content>
+
+
+
+
+  <script src="node_modules/angular/angular.min.js"></script>
+  <script src="node_modules/angular/angular.js"></script>
+  <script src="node_modules/angular-animate/angular-animate.js"></script>
+  <script src="node_modules/angular-aria/angular-aria.js"></script>
+  <script src="node_modules/angular-material/angular-material.js"></script>
+
+
+
+  <script src="app.js"></script>
+  <script src="stars.ctr.js"></script>
+  <script src="stars.fac.js"></script>
+
+</body>
+</html>
